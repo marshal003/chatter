@@ -1,26 +1,21 @@
 <div ng-include="'partials/navbar'"></div>
-
-<div class="jumbotron">
-  <h1>'Allo, 'Allo <span ng-show="currentUser">{{ currentUser.name }}</span>!</h1>
-  <p class="lead">
-    <img src="images/yeoman.png" alt="I'm Yeoman"><br>
-    Always a pleasure scaffolding your apps.
-  </p>
-  <p><a class="btn btn-lg btn-success" ng-href="#">Splendid!</a></p>
-</div>
-<div class="container">
-	<div class="row" ng-controller="chatCtrl">
+	<div ng-controller="chatCtrl">
 		<div class="chat-box">
 			<div class="users">
 				<span ng-repeat="user in users" ng-bind="user">&nbsp;</span>
 			</div>
-			<div class="chat-messages">
-				<div class="message-container" ng-repeat="message in messages">
-					<div class="message">
-						<span ng-bind="message.user"></span>: &nbsp;
-						<p class="message-text" ng-bind="message.text"></p>
-					</div>
-				</div>
+			<div class="chat-messages discussion">
+				<ol class="message-container" ng-repeat="message in messages">
+					<li class="other">
+						<div class="avatar">
+							<img src="http://lorempixel.com/20/20/" alt="{{user}}">
+						</div>
+						<div class="message">
+							<p class="message-text" ng-bind="message.text"></p>
+							<p class="time" ng-bind="message.date|date"></p>
+						</div>
+					</li>
+				</ol>
 			</div>
 		</div>
 		<div class="chat-input">
@@ -38,7 +33,6 @@
 		</div>
 	 </div>
   </div>
-</div>
 <div class="footer">
-  <p>♥ from the Yeoman team</p>
+  <p>♥ from freebirds team</p>
 </div>
