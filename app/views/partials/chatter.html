@@ -1,0 +1,19 @@
+<div class="col-md-3" ng-controller="chatCtrl">
+	<div class="users">
+		<span ng-repeat="user" ng-bind="user">&nbsp;</span>
+	</div>
+	<div class="chat-box">
+		<div class="message" ng-repeat="message in messages">
+			<span ng-bind="message.user"></span>
+			<p ng-bind="message.text"></p>
+		</div>
+	</div>
+	<div class="chat-input">
+		<form class="form form-horizontal">
+			<div class="form-control" ng-submit="sendMessage()">
+				<input type="text" ng-model="" class="form-control">	
+				<input type="submit" value="send">
+			</div>	
+		</form>
+	</div>
+</div>
