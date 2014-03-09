@@ -2,17 +2,27 @@
 
 /* Controllers */
 
-function	chatCtrl($scope, socket) {
+function	chatCtrl($scope, socket, dataService) {
 
   // Socket listeners
-  // ================
+  // ===============
+$scope.getAllUsers = function(){
+	 dataService.get('/api/users/').success(function(data){
+		$scope.users = data;
+	 });
+};
 
-  socket.on('init', function (data) {
-    $scope.name = data.name;
-    $scope.users = data.users;
-  });
+$scope.getPreviousChats = function(){
+	dataService.get('/api/chats/freebirds').success(function(data){
+		$scope.messages = data;
+	});
+};
+// Init data source
+	$scope.getAllUsers();
+	$scope.getPreviousChats();
 
-  socket.on('send:message', function (message) {
+	
+socket.on('send:message', function (message) {
     $scope.messages.push(message);
   });
 
@@ -21,17 +31,13 @@ function	chatCtrl($scope, socket) {
   });
 
   socket.on('user:join', function (data) {
-    $scope.messages.push({
-      user: 'chatroom',
-      text: 'User ' + data.name + ' has joined.'
-    });
-    $scope.users.push(data.name);
+    $scope.getAllUsers();
   });
 
   // add a message to the conversation when a user disconnects or leaves the room
   socket.on('user:left', function (data) {
     $scope.messages.push({
-      user: 'chatroom',
+      user:  data.name,
       text: 'User ' + data.name + ' has left.'
     });
     var i, user;
@@ -43,7 +49,6 @@ function	chatCtrl($scope, socket) {
       }
     }
   });
-
   // Private helpers
   // ===============
 
@@ -57,7 +62,7 @@ function	chatCtrl($scope, socket) {
     }
 
     $scope.messages.push({
-      user: 'chatroom',
+      user: newName,
       text: 'User ' + oldName + ' is now known as ' + newName + '.'
     });
   };
@@ -80,17 +85,17 @@ function	chatCtrl($scope, socket) {
       }
     });
   };
-
   $scope.messages = [];
 
   $scope.sendMessage = function () {
     socket.emit('send:message', {
-      message: $scope.message
+      message: $scope.message,
+	  user: $scope.currentUser.name
     });
 
     // add the message to our model locally
     $scope.messages.push({
-      user: $scope.name,
+      user: $scope.currentUser.name,
       text: $scope.message
     });
 

@@ -1,15 +1,7 @@
 <div ng-include="'partials/navbar.html'"></div>
-
-<div class="row">
-  <div class="col-sm-12">
-    <h1>Change Password</h1>
-  </div>
-  <div class="col-sm-12">
-    <form class="form" name="form" ng-submit="changePassword(form)" novalidate>
-    	
+    <form class="form-horizontal" role="form" name="form" ng-submit="changePassword(form)" novalidate>
       <div class="form-group">
         <label>Current Password</label>
-
         <input type="password" name="password" class="form-control" ng-model="user.oldPassword"
                mongoose-error/>    
         <p class="help-block" ng-show="form.password.$error.mongoose">
@@ -33,5 +25,3 @@
 
       <button class="btn btn-lg btn-primary" type="submit">Save changes</button>
     </form>
-  </div>
-</div>

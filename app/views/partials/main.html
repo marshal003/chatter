@@ -1,38 +1,45 @@
 <div ng-include="'partials/navbar'"></div>
-	<div ng-controller="chatCtrl">
-		<div class="chat-box">
-			<div class="users">
-				<span ng-repeat="user in users" ng-bind="user">&nbsp;</span>
-			</div>
-			<div class="chat-messages discussion">
-				<ol class="message-container" ng-repeat="message in messages">
-					<li class="other">
-						<div class="avatar">
-							<img src="http://lorempixel.com/20/20/" alt="{{user}}">
-						</div>
-						<div class="message">
-							<p class="message-text" ng-bind="message.text"></p>
-							<p class="time" ng-bind="message.date|date"></p>
-						</div>
-					</li>
-				</ol>
-			</div>
+<div ng-if="!currentUser" class="about-us">
+	<div class="about-app">
+		<img class="full-page-image" src="images/angry-birds-fly.jpg">
+	</div>
+</div>
+<div ng-if="currentUser" ng-controller="chatCtrl" class="container">
+	<div class="chat-box">
+		<div class="users" >
+			<span ng-bind="users.length"></span>
+			<span> members have joined Group</span>
 		</div>
-		<div class="chat-input">
-			<form class="form form-horizontal" ng-submit="sendMessage()">
-				<div class="input-group">
-					<span class="input-group-btn">
-						<button class="btn btn-default" >Guest</button>
-					</span>
-					<input type="text" ng-model="message" class="form-control">	
-					<span class="input-group-btn">
-						<button class="btn btn-default">Send</button>
-					</span>
-				</div>	
-			</form>
+		<div class="chat-messages discussion">
+			<ol class="message-container" >
+				<li ng-class="{other: currentUser.name!=message.user, self: currentUser.name==message.user}" ng-repeat="message in messages">
+					<div class="avatar">
+						<img src="http://lorempixel.com/20/20/" alt="{{user}}">
+					</div>
+					<div class="message">
+						<p class="sender" ng-bind="message.user"></p>
+						<p class="message-text" ng-bind="message.text"></p>
+						<p class="time" ng-bind="message.date|date"></p>
+					</div>
+				</li>
+			</ol>
 		</div>
-	 </div>
-  </div>
+	</div>
+	<div class="chat-input">
+		<form class="form form-horizontal" ng-submit="sendMessage()">
+			<div class="input-group">
+				<span class="input-group-btn">
+					<button class="btn btn-default" >Guest</button>
+				</span>
+				<input type="text" ng-model="message" class="form-control">	
+				<span class="input-group-btn">
+					<button class="btn btn-default">Send</button>
+				</span>
+			</div>	
+		</form>
+	</div>
+ </div>
+</div>
 <div class="footer">
-  <p>♥ from freebirds team</p>
+  <p>♥ from freebirds</p>
 </div>
